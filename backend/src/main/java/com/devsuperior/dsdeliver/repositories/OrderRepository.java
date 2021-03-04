@@ -1,6 +1,10 @@
 package com.devsuperior.dsdeliver.repositories;
 
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.devsuperior.dsdeliver.entities.Order;
 
@@ -11,5 +15,9 @@ import com.devsuperior.dsdeliver.entities.Order;
 /*ASSIM NOSSO OBJETO DO TIPO PRODUCTREPOSITORY, ELE VAI TER TODAS OPERACOES BASICAS PARA ACESSAR O DB
  * RELACIONADO A ENTIDADE PRODUCT. */
 public interface OrderRepository extends JpaRepository<Order, Long>{
+	
+	/*CONSULTA DAS ORDES PELO MOMENTO E STATUS DO PEDIDO */
+	@Query( "SELECT DISTINCT obj FROM Order obj JOIN FETCH obj.products WHERE obj.status = 0 ORDER BY obj.moment ASC")
+	List<Order> findOrdersWithProducts();
 
 }
