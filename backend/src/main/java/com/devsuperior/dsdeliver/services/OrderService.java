@@ -58,6 +58,17 @@ public class OrderService {
 		// SALVANDO O PRODUTO NO DB
 		order = repository.save(order);
 		return new OrderDTO(order);
+	}
+	
+// ENDPOINT CRIADO PARA QUANDO O PRODUTO FOR CLICADO COMO ENTREGUE
+	
+	@Transactional // TODA TRANSACTIONAL SE REFERE A ALTERAÇÃO NO DB
+	public OrderDTO setDelivered(Long id) {
+		Order order = repository.getOne(id);
+		order.setStatus(OrderStatus.DELIVERED);
+		order = repository.save(order);
+		return new OrderDTO(order);
 
 	}
+
 }
